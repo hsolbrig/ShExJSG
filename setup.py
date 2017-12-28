@@ -4,13 +4,9 @@ try:
 except ImportError:
     from distutils.core import setup
 
-if sys.version < (3, 6):
+if sys.version_info < (3, 6):
     print("This module requires python 3.6 or later")
     sys.exit(1)
-
-# This module currently works with python3.6 or later
-with open('requirements.txt') as reqs:
-    requires = [l for l in reqs.readline()]
 
 setup(
     name='ShExJSG',
@@ -21,7 +17,7 @@ setup(
     author='Harold Solbrig',
     author_email='solbrig@solbrig-informatics.com',
     description='"ShExJSG - Astract Syntax Tree for the ShEx 2.0 language',
-    install_requires=requires,
+    install_requires=['PyJSG>=0.4.0'],
     tests_require = ['yadict-compare', 'requests'],
     classifiers=[
         'Development Status :: 3 - Alpha',
