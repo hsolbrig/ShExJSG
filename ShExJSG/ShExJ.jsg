@@ -67,7 +67,7 @@ Annotation       { predicate:IRIREF object:objectValue }
 # Turtle IRIREF without enclosing "<>"s
 IRIREF           : ([^\u0000-\u0020\u005C\u007B\u007D<>"|^`] | UCHAR)*     ; # <http://www.w3.org/TR/turtle/#grammar-production-IRIREF> - "<>"s
 # Turtle BLANK_NODE_LABEL
-BNODE            : '_:' (PN_CHARS_U | [0-9]) ((PN_CHARS | '.')* PN_CHARS)? ; # <http://www.w.org/TR/turtle/#grammar-production-BLANK_NODE_LABEL>
+BNODE            : '_:' (PN_CHARS_U | [0-9]) ((PN_CHARS | '.')* PN_CHARS)? ; # <http://www.w3.org/TR/turtle/#grammar-production-BLANK_NODE_LABEL>
 # BCP47 Language-Tag
 LANGTAG          : [a-zA-Z]+('-'([a-zA-Z0-9])+)* ;
 
