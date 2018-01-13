@@ -19,3 +19,10 @@ This package currently requires python 3.6 or later.  It could be updated to sup
 pip install ShExJSG
 ```
 
+## Updating the parser
+```bash
+cd ShExJSG
+generate_parser ShExJ.jsg
+```
+
+Then run all of the unit tests
