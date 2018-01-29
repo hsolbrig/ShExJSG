@@ -20,6 +20,7 @@ class ShExC:
         schema: List[str] = []
         schema += self.imports(self.schema.imports)
         schema += self.semActs(self.schema.startActs)
+        schema += self.start(self.schema.start)
         schema += self.shapes(self.schema.shapes)
         rval = ""
         rline = ""
@@ -53,6 +54,9 @@ class ShExC:
                 rval.append(f"%{self.iriref(act.name)}")
                 rval.append(f"{{{act.code}%}}" if act.code.val is not None else '%')
         return rval
+
+    def start(self, start: Optional[ShExJ.shapeExpr]) -> List[str]:
+        return ["start="] + self.shapeExpr(start) if start is not None else []
 
     def shapes(self, shapes: Optional[List[ShExJ.shapeExpr]]) -> List[str]:
         rval = []

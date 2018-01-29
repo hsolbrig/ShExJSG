@@ -10,7 +10,7 @@ if sys.version_info < (3, 6):
 
 setup(
     name='ShExJSG',
-    version='0.2.0',
+    version='0.2.1',
     packages=['ShExJSG'],
     url="http://github.com/hsolbrig/ShExJSG",
     license='Apache 2.0',
@@ -24,5 +24,5 @@ setup(
         'Environment :: Console',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Compilers',
-        'Programming Language :: Python :: 3.6 :: Only']
+        'Programming Language :: Python :: 3.6']
 )

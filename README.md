@@ -1,6 +1,10 @@
 # ShExJSG - 
 Python representation of the ShEx AST(ish) specification. 
 
+## History
+* 0.2.0 - alpha release of ShExC emitter
+* 0.2.1 - add 'start' to emitter_
+
 [![PyPi](https://version-image.appspot.com/pypi/?name=ShExJSG)](https://pypi.python.org/pypi/ShExJSG)
 
 [![Pyversions](https://img.shields.io/pypi/pyversions/PyShEx.svg)](https://pypi.python.org/pypi/PyShEx)
@@ -11,13 +15,23 @@ from ShExJSG import Schema, ShExC, ShExJ
 
 schema = Schema()
 
-schema.start = ShExJ.IRIREF("http://example.org/sample")
+schema.start = ShExJ.Shape()
 
 print(schema._is_valid())
 print(schema._as_json_dumps())
 print(str(ShExC(schema)))
 ```
-
+```text
+True
+{
+   "@context": "http://www.w3.org/ns/shex.jsonld",
+   "start": {
+      "type": "Shape"
+   },
+   "type": "Schema"
+}
+ start=  { }
+```
 
 
 
