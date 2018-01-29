@@ -1,1 +1,2 @@
-from ShExJSG.shex_schema import Schema
+from ShExJSG.SchemaWithContext import Schema
+from ShExJSG.ShExC import ShExC, ShExJ

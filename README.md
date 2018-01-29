@@ -1,4 +1,26 @@
-# Python representation of the ShEx AST(ish) specification
+# ShExJSG - 
+Python representation of the ShEx AST(ish) specification. 
+
+[![PyPi](https://version-image.appspot.com/pypi/?name=ShExJSG)](https://pypi.python.org/pypi/ShExJSG)
+
+[![Pyversions](https://img.shields.io/pypi/pyversions/PyShEx.svg)](https://pypi.python.org/pypi/PyShEx)
+
+## Use:
+```python
+from ShExJSG import Schema, ShExC, ShExJ
+
+schema = Schema()
+
+schema.start = ShExJ.IRIREF("http://example.org/sample")
+
+print(schema._is_valid())
+print(schema._as_json_dumps())
+print(str(ShExC(schema)))
+```
+
+
+
+
 
 ## ShExJ.jsg
 This file is derived from the [ShEx JSG specification](https://github.com/shexSpec/shexTest/blob/master/doc/ShExJ.jsg).  The differences are as follows:

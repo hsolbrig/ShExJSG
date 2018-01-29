@@ -1,0 +1,222 @@
+{  "@context": "http://www.w3.org/ns/shex.jsonld",
+   "start": "blabla",
+   "shapes": [
+      {
+         "id": "blabla",
+         "shapeExprs": [
+            {
+               "id": "blabla2",
+               "expression": {
+                  "predicate": "http://test.nl/blabla",
+                  "valueExpr": "newshape",
+                  "type": "TripleConstraint"
+               },
+               "type": "Shape"
+            },
+            {
+               "id": "blabla2",
+               "expression": {
+                  "predicate": "http://test.nl/blabla",
+                  "valueExpr": "newshape",
+                  "type": "TripleConstraint"
+               },
+               "type": "Shape"
+            }
+         ],
+         "type": "ShapeOr"
+      },
+      {
+         "id": "blabla",
+         "shapeExprs": [
+            {
+               "id": "blabla2",
+               "expression": {
+                  "predicate": "http://test.nl/blabla",
+                  "valueExpr": "newshape",
+                  "type": "TripleConstraint"
+               },
+               "type": "Shape"
+            },
+            {
+               "id": "blabla2",
+               "expression": {
+                  "predicate": "http://test.nl/blabla",
+                  "valueExpr": "newshape",
+                  "type": "TripleConstraint"
+               },
+               "type": "Shape"
+            }
+         ],
+         "type": "ShapeOr"
+      },
+      {
+         "id": "blabla",
+         "shapeExprs": [
+            {
+               "id": "blabla2",
+               "expression": {
+                  "predicate": "http://test.nl/blabla",
+                  "valueExpr": "newshape",
+                  "type": "TripleConstraint"
+               },
+               "type": "Shape"
+            },
+            {
+               "id": "blabla2",
+               "expression": {
+                  "predicate": "http://test.nl/blabla",
+                  "valueExpr": "newshape",
+                  "type": "TripleConstraint"
+               },
+               "type": "Shape"
+            }
+         ],
+         "type": "ShapeOr"
+      },
+      {
+         "id": "blabla",
+         "shapeExprs": [
+            {
+               "id": "blabla2",
+               "expression": {
+                  "predicate": "http://test.nl/blabla",
+                  "valueExpr": "newshape",
+                  "type": "TripleConstraint"
+               },
+               "type": "Shape"
+            },
+            {
+               "id": "blabla2",
+               "expression": {
+                  "predicate": "http://test.nl/blabla",
+                  "valueExpr": "newshape",
+                  "type": "TripleConstraint"
+               },
+               "type": "Shape"
+            }
+         ],
+         "type": "ShapeOr"
+      },
+      {
+         "id": "blabla",
+         "shapeExprs": [
+            {
+               "id": "blabla2",
+               "expression": {
+                  "predicate": "http://test.nl/blabla",
+                  "valueExpr": "newshape",
+                  "type": "TripleConstraint"
+               },
+               "type": "Shape"
+            },
+            {
+               "id": "blabla2",
+               "expression": {
+                  "predicate": "http://test.nl/blabla",
+                  "valueExpr": "newshape",
+                  "type": "TripleConstraint"
+               },
+               "type": "Shape"
+            }
+         ],
+         "type": "ShapeOr"
+      },
+      {
+         "id": "blabla",
+         "shapeExprs": [
+            {
+               "id": "blabla2",
+               "expression": {
+                  "predicate": "http://test.nl/blabla",
+                  "valueExpr": "newshape",
+                  "type": "TripleConstraint"
+               },
+               "type": "Shape"
+            },
+            {
+               "id": "blabla2",
+               "expression": {
+                  "predicate": "http://test.nl/blabla",
+                  "valueExpr": "newshape",
+                  "type": "TripleConstraint"
+               },
+               "type": "Shape"
+            }
+         ],
+         "type": "ShapeOr"
+      },
+      {
+         "id": "blabla",
+         "shapeExprs": [
+            {
+               "id": "blabla2",
+               "expression": {
+                  "predicate": "http://test.nl/blabla",
+                  "valueExpr": "newshape",
+                  "type": "TripleConstraint"
+               },
+               "type": "Shape"
+            },
+            {
+               "id": "blabla2",
+               "expression": {
+                  "predicate": "http://test.nl/blabla",
+                  "valueExpr": "newshape",
+                  "type": "TripleConstraint"
+               },
+               "type": "Shape"
+            }
+         ],
+         "type": "ShapeOr"
+      },
+      {
+         "id": "blabla",
+         "shapeExprs": [
+            {
+               "id": "blabla2",
+               "expression": {
+                  "predicate": "http://test.nl/blabla",
+                  "valueExpr": "newshape",
+                  "type": "TripleConstraint"
+               },
+               "type": "Shape"
+            },
+            {
+               "id": "blabla2",
+               "expression": {
+                  "predicate": "http://test.nl/blabla",
+                  "valueExpr": "newshape",
+                  "type": "TripleConstraint"
+               },
+               "type": "Shape"
+            }
+         ],
+         "type": "ShapeOr"
+      },
+      {
+         "id": "blabla",
+         "shapeExprs": [
+            {
+               "id": "blabla2",
+               "expression": {
+                  "predicate": "http://test.nl/blabla",
+                  "valueExpr": "newshape",
+                  "type": "TripleConstraint"
+               },
+               "type": "Shape"
+            },
+            {
+               "id": "blabla2",
+               "expression": {
+                  "predicate": "http://test.nl/blabla",
+                  "valueExpr": "newshape",
+                  "type": "TripleConstraint"
+               },
+               "type": "Shape"
+            }
+         ],
+         "type": "ShapeOr"
+      }
+   ],
+   "type": "Schema"
+}
