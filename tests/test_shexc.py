@@ -1,28 +1,26 @@
 import os
 import sys
 import unittest
-from typing import NamedTuple, List
+from io import StringIO
+from typing import NamedTuple, List, TextIO, Dict
 
 import requests
 from dict_compare import compare_dicts
 from jsonasobj import loads as jao_loads
-from pyjsg.jsglib.jsg import loads as jsg_loads
-from pyjsg.jsglib.logger import Logger
-from pyshexc.parser_impl import generate_shexj
+from pyjsg.jsglib import loads as jsg_loads
 
 from ShExJSG import ShExJ, ShExC
-from tests.utils.memlogger import MemLogger
+from pyshexc.parser_impl.generate_shexj import parse
+
 
 # Repository to validate against
-# shexTestRepository = "https://api.github.com/repos/shexSpec/shexTest/contents/schemas?ref=2.0"
+# shexTestRepository = "https://api.github.com/repos/shexSpec/shexTest/contents/schemas"
 
-shexTestRepository = os.path.abspath(os.path.expanduser("~/Development/git/shexSpec/shexTest/schemas/"))
+# TODO: point this repository back togithub
+shexTestRepository = os.path.abspath(os.path.expanduser("~/git/shexSpec/shexTest/schemas/"))
 
 # If not empty, validate this single file
 testShexFile: str = ""
-# testShexFile = "https://raw.githubusercontent.com/shexSpec/shexTest/2.0/schemas/" \
-#                "1dotRefAND3.json"
-
 
 STOP_ON_ERROR = False       # True means go until you hit the first error
 
@@ -39,6 +37,7 @@ INSANE_BNODE = "Insane BNODE Identifiers"
 skip = {'coverage.json': NOT_SHEX_FILE,
         'manifest.json': NOT_SHEX_FILE,
         '1dotANDopen1dotAND1dotclose.json': NESTED_AND,
+        'open1dotAND1dotcloseAND1dot': NESTED_AND,
         '1dotCodeWithEscapes1.json': SEMACT_CHARS,
         '1dotIMPORT1dot.json': USES_IMPORTS,
         "1literalPattern_with_all_meta.json": PATTERN_CHARS,
@@ -85,7 +84,7 @@ class TestFile(NamedTuple):
     filename: str
 
 
-def compare_json(j1: str, j2: str, log: Logger) -> bool:
+def compare_json(j1: str, j2: str, log: TextIO) -> bool:
     """
     Compare two JSON representation
     :param j1: first string
@@ -105,46 +104,51 @@ def validate_shexc_json(json_str: str, input_fname: str) -> bool:
     :param input_fname: Name of source file for error reporting
     :return: True if pass
     """
-    logger = Logger(MemLogger('\t'))
+    logger = StringIO()
 
     # Load the JSON image of the good object and make sure it is valud
     shex_json: ShExJ.Schema = jsg_loads(json_str, ShExJ)
     if not shex_json._is_valid(logger):
         print("File: {} - ".format(input_fname))
-        print(logger.text)
+        print(logger.getvalue())
         return False
 
     # Convert the JSON image into ShExC
     shexc_str = str(ShExC(shex_json))
 
     # Convert the ShExC back into ShExJ
-    output_shex_obj = ShExC(shexc_str).schema
+    output_shex_obj = parse(shexc_str)
     if output_shex_obj is None:
+        for number, line in enumerate(shexc_str.split('\n')):
+            print(f"{number + 1}: {line}")
         return False
     output_shex_obj["@context"] = "http://www.w3.org/ns/shex.jsonld"
     rval = compare_json(json_str, output_shex_obj._as_json_dumps(), logger)
     if not rval:
         print(shexc_str)
-        print(logger.text)
+        print(logger.getvalue())
     return rval
-
 
 
 class Stats:
     def __init__(self):
         self.total = self.passed = self.skipped = self.failed = 0
+        self.skipreasons: Dict[str, int] = {}
 
     def __str__(self):
         return f"*** Total tests: {self.total}\n" + \
                f"\tPassed: {self.passed}\n" + \
                f"\tSkipped: {self.skipped}\n" + \
-               f"\tFailed: {self.failed}"
+               f"\tFailed: {self.failed}\n\n" + \
+               "*** Skip Reasons ***\n" + '\n'.join(f"\t{sk} : {self.skipreasons[sk]}"
+                                                    for sk in self.skipreasons.keys())
 
 
 def validate_file(file: TestFile, stats: Stats) -> bool:
     """
     Download the file in download_url and validate it using the supplied module
     :param file: path and name of file to download
+    :param stats: Statistics gathering module
     :return:
     """
     stats.total += 1
@@ -170,6 +174,10 @@ def validate_file(file: TestFile, stats: Stats) -> bool:
     else:
         print("Skipping {}".format(file.fullpath))
         stats.skipped += 1
+        key = skip[file.filename]
+        if key not in stats.skipreasons:
+            stats.skipreasons[key] = 0
+        stats.skipreasons[key] = stats.skipreasons[key] + 1
         return True
 
 

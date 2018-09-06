@@ -10,15 +10,15 @@ if sys.version_info < (3, 6):
 
 setup(
     name='ShExJSG',
-    version='0.2.1',
+    version='0.4b1',
     packages=['ShExJSG'],
     url="http://github.com/hsolbrig/ShExJSG",
     license='Apache 2.0',
     author='Harold Solbrig',
     author_email='solbrig@solbrig-informatics.com',
     description='"ShExJSG - Astract Syntax Tree for the ShEx 2.0 language',
-    install_requires=['PyJSG>=0.5.2', 'PyShExC>=0.3.2'],
-    tests_require = ['yadict-compare', 'requests'],
+    install_requires=['PyJSG==0.8b4'],
+    tests_require = ['yadict-compare>=1.2.0', 'requests>=2.19', 'PyShExC>=0.4.0', 'jsonasobj>=1.2.1'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',

@@ -1,1 +1,2 @@
-PyJSG>=0.4.0
+PyJSG==0.8b4
+PyShExC

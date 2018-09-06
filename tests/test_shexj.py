@@ -1,19 +1,24 @@
+import os
+import sys
 import unittest
-from typing import Optional
+from io import StringIO
+from typing import Optional, TextIO, List, NamedTuple
 
 import requests
 from dict_compare import compare_dicts
 from jsonasobj import loads as jao_loads
+from pyjsg.jsglib.loader import loads as jsg_loads
 
-from pyjsg.jsglib.logger import Logger
-from pyjsg.jsglib.jsg import loads as jsg_loads
 
 from ShExJSG import ShExJ
-from tests.utils.memlogger import MemLogger
 
 
 # Repository to validate against
-shexTestRepository = "https://api.github.com/repos/shexSpec/shexTest/contents/schemas?ref=2.0"
+# shexTestRepository = "https://api.github.com/repos/shexSpec/shexTest/contents/schemas"
+
+
+# TODO: point this repository back togithub
+shexTestRepository = os.path.abspath(os.path.expanduser("~/git/shexSpec/shexTest/schemas/"))
 
 # If not empty, validate this single file
 shexTestJson: str = None
@@ -27,7 +32,12 @@ STOP_ON_ERROR = False       # True means go until you hit one error
 skip = ['coverage.json', 'manifest.json']
 
 
-def compare_json(j1: str, j2: str, log: Logger) -> bool:
+class TestFile(NamedTuple):
+    fullpath: str
+    filename: str
+
+
+def compare_json(j1: str, j2: str, log: TextIO) -> bool:
     """
     Compare two JSON representation
     :param j1: first string
@@ -47,37 +57,42 @@ def validate_shexj_json(json_str: str, input_fname: str) -> bool:
     :param input_fname: Name of source file for error reporting
     :return: True if pass
     """
-    logger = Logger(MemLogger('\t'))
+    logger = StringIO()
     shex_obj = jsg_loads(json_str, ShExJ)
     if not shex_obj._is_valid(logger):
         print("File: {} - ".format(input_fname))
-        print(logger.text)
+        print(logger.getvalue())
         return False
     elif not compare_json(json_str, shex_obj._as_json, logger):
         print("File: {} - ".format(input_fname))
-        print(logger.text)
+        print(logger.getvalue())
         print(shex_obj._as_json_dumps())
         return False
     return True
 
 
-def validate_file(download_url: str) -> bool:
+def validate_file(file: TestFile) -> bool:
     """
     Download the file in download_url and validate it using the supplied module
-    :param download_url: url of file to download
+    :param file: path and name fo file to download
     :return:
     """
-    fname = download_url.rsplit('/', 1)[1]
-    if fname not in skip:
-        print("Testing {}".format(download_url))
-        resp = requests.get(download_url)
-        if resp.ok:
-            return validate_shexj_json(resp.text, download_url)
+    if file.filename not in skip:
+        print(f"Testing {file.fullpath}")
+        if ':' in file.fullpath:
+            resp = requests.get(file.fullpath)
+            if resp.ok:
+                file_text = resp.text
+            else:
+                print("Error {}: {}".format(resp.status_code, resp.reason))
+                return False
         else:
-            print("Error {}: {}".format(resp.status_code, resp.reason))
-            return False
-    print("Skipping {}".format(download_url))
-    return True
+            with open(file.fullpath) as f:
+                file_text = f.read()
+        return validate_shexj_json(file_text, file.fullpath)
+    else:
+        print("Skipping {}".format(file.fullpath))
+        return True
 
 
 def download_github_file(github_url: str) -> Optional[str]:
@@ -102,24 +117,40 @@ def validate_shex_schemas() -> bool:
     :return:
     """
     if not shexTestJson:
-        resp = requests.get(shexTestRepository)
-        if resp.ok:
-            if STOP_ON_ERROR:
-                return all(validate_file(f['download_url']) for f in resp.json() if f['name'].endswith('.json'))
-            else:
-                return all([validate_file(f['download_url']) for f in resp.json() if f['name'].endswith('.json')])
+        test_list: List[TestFile] = enumerate_http_files(shexTestRepository) if ':' in shexTestRepository else \
+            enumerate_directory(shexTestRepository)
+        if test_list is None:
+            rval = True
+        elif STOP_ON_ERROR:
+            rval = all(validate_file(e) for e in test_list if e.filename.endswith('.json'))
         else:
-            print("Error {}: {}".format(resp.status_code, resp.reason))
+            rval = all([validate_file(e) for e in test_list if e.filename.endswith('.json')])
     else:
-        return validate_file(shexTestJson)
-    return False
+        return validate_file(TestFile(shexTestJson, shexTestJson.rsplit('/')[1]))
+    return rval
+
+
+def enumerate_http_files(url) -> List[TestFile]:
+    resp = requests.get(url)
+    if resp.ok:
+        for f in resp.json():
+            yield TestFile(f['download_url'], f['name'])
+    else:
+        print("Error {}: {}".format(resp.status_code, resp.reason), file=sys.stderr)
+
+
+def enumerate_directory(dir_) -> List[TestFile]:
+    for fname in os.listdir(dir_):
+        fpath = os.path.join(dir_, fname)
+        if os.path.isfile(fpath):
+            yield TestFile(fpath, fname)
 
 
 class ShExJValidationTestCase(unittest.TestCase):
     """ Download the contents of the shexTestRepository and make sure that they can all be correctly loaded as
     ShExJSG images.
     """
-
+    @unittest.skipIf(False, "Temporarily disabled - remove me before submit")
     def test_shex_schema(self):
         self.assertTrue(validate_shex_schemas())
 
