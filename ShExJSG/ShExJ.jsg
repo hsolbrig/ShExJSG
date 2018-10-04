@@ -43,8 +43,8 @@ IriStemRange     { stem:(IRIREF|Wildcard) exclusions:[(IRIREF | IriStem)+] }
 LiteralStem      { stem:@string }
 LiteralStemRange { stem:(@string|Wildcard) exclusions:[(@string | LiteralStem)+] }
 Language         { languageTag:LANGTAG }
-LanguageStem     { stem:LANGTAG }
-LanguageStemRange{ stem:(LANGTAG|Wildcard) exclusions:[(LANGTAG | LanguageStem) +] }
+LanguageStem     { stem:@string }
+LanguageStemRange{ stem:(@string|Wildcard) exclusions:[(LANGTAG | LanguageStem) +] }
 Wildcard         {  }
 
 Shape            {id:shapeExprLabel? extends:[shapeExprLabel+]? closed:@bool? extra:[IRIREF+]? expression:tripleExpr? semActs:[SemAct+]? annotations:[Annotation+]? }

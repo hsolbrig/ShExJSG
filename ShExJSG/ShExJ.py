@@ -1,5 +1,5 @@
-# Auto generated from ShExJ.jsg by PyJSG version 0.8b1
-# Generation date: 2018-08-15 12:00
+# Auto generated from ShExJ.jsg by PyJSG version 0.8b4
+# Generation date: 2018-10-04 01:40
 #
 import typing
 import pyjsg.jsglib as jsg
@@ -11,7 +11,7 @@ _CONTEXT.TYPE_EXCEPTIONS.append("ObjectLiteral")
 
 
 class _Anon1(jsg.JSGString):
-    pattern = jsg.JSGPattern(r'http\:\/\/www\.w3\.org\/ns\/shex\.jsonld')
+    pattern = jsg.JSGPattern(r'http://www\.w3\.org/ns/shex\.jsonld')
 
 
 class _Anon2(jsg.JSGString):
@@ -47,7 +47,7 @@ class PN_CHARS(jsg.JSGString):
 
 
 class BNODE(jsg.JSGString):
-    pattern = jsg.JSGPattern(r'_\:(({PN_CHARS_U})|[0-9])((({PN_CHARS})|\.)*({PN_CHARS}))?'.format(PN_CHARS=PN_CHARS.pattern, PN_CHARS_U=PN_CHARS_U.pattern))
+    pattern = jsg.JSGPattern(r'_:(({PN_CHARS_U})|[0-9])((({PN_CHARS})|\.)*({PN_CHARS}))?'.format(PN_CHARS=PN_CHARS.pattern, PN_CHARS_U=PN_CHARS_U.pattern))
 
 
 class PN_PREFIX(jsg.JSGString):
@@ -118,6 +118,19 @@ class numericFacet(jsg.JSGObject):
 
 
 class LiteralStem(jsg.JSGObject):
+    _reference_types = []
+    _members = {'stem': jsg.String}
+    _strict = True
+
+    def __init__(self,
+                 stem: str = None,
+                 **_kwargs: typing.Dict[str, object]):
+        super().__init__(_CONTEXT, **_kwargs)
+        self.stem = stem
+
+
+
+class LanguageStem(jsg.JSGObject):
     _reference_types = []
     _members = {'stem': jsg.String}
     _strict = True
@@ -224,16 +237,19 @@ class Language(jsg.JSGObject):
 
 
 
-class LanguageStem(jsg.JSGObject):
+class LanguageStemRange(jsg.JSGObject):
     _reference_types = []
-    _members = {'stem': LANGTAG}
+    _members = {'stem': typing.Union[jsg.String, Wildcard],
+                'exclusions': jsg.ArrayFactory('exclusions', _CONTEXT, typing.Union[LANGTAG, LanguageStem], 1, None)}
     _strict = True
 
     def __init__(self,
-                 stem: str = None,
+                 stem: typing.Union[str, Wildcard] = None,
+                 exclusions: typing.List[typing.Union[str, LanguageStem]] = None,
                  **_kwargs: typing.Dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.stem = stem
+        self.exclusions = exclusions
 
 
 
@@ -260,22 +276,6 @@ class xsFacet_1_(jsg.JSGObject):
                 self.flags = opts_.flags
             else:
                 raise ValueError(f"Unrecognized value type: {opts_}")
-
-
-
-class LanguageStemRange(jsg.JSGObject):
-    _reference_types = []
-    _members = {'stem': typing.Union[LANGTAG, Wildcard],
-                'exclusions': jsg.ArrayFactory('exclusions', _CONTEXT, typing.Union[LANGTAG, LanguageStem], 1, None)}
-    _strict = True
-
-    def __init__(self,
-                 stem: typing.Union[str, Wildcard] = None,
-                 exclusions: typing.List[typing.Union[str, LanguageStem]] = None,
-                 **_kwargs: typing.Dict[str, object]):
-        super().__init__(_CONTEXT, **_kwargs)
-        self.stem = stem
-        self.exclusions = exclusions
 
 
 

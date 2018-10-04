@@ -29,7 +29,7 @@ shexTestJson: str = None
 STOP_ON_ERROR = False       # True means go until you hit one error
 
 # Files to skip until we reintroduce a manifest reader
-skip = ['coverage.json', 'manifest.json']
+skip = ['coverage.json', 'manifest.json', '1dotCodeWithEscapes1.json']
 
 
 class TestFile(NamedTuple):
