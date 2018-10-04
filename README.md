@@ -4,14 +4,18 @@ Python representation of the ShEx AST(ish) specification.
 ## History
 * 0.2.0 - alpha release of ShExC emitter
 * 0.2.1 - add 'start' to emitter_
+* 0.3.0 - Updated to PyJSG 0.8b1
+* 0.5.0 - first candidate for ShEx 2.1
 
-[![PyPi](https://version-image.appspot.com/pypi/?name=ShExJSG)](https://pypi.python.org/pypi/ShExJSG)
+[![Pyversions](https://img.shields.io/pypi/pyversions/ShExJSG.svg)](https://pypi.python.org/pypi/ShExJSG)
 
-[![Pyversions](https://img.shields.io/pypi/pyversions/PyShEx.svg)](https://pypi.python.org/pypi/PyShEx)
+[![PyPi](https://img.shields.io/pypi/v/ShExJSG.svg)](https://pypi.python.org/pypi/ShExJSG)
+
 
 ## Use:
 ```python
-from ShExJSG import Schema, ShExC, ShExJ
+from ShExJSG import Schema, ShExJ
+from PyShExC import ShExC
 
 schema = Schema()
 
