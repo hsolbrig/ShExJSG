@@ -1,9 +1,11 @@
 import re
 from functools import reduce
-from typing import List, Any, Optional, Union, Tuple
+from typing import Optional, Tuple, List
 
-from pyjsg.jsglib import *
 from ShExJSG import ShExJ
+from pyjsg.jsglib import *
+
+from pyshexc.parser_impl import generate_shexj
 
 repl_list: List[Tuple[str, str]] = [
     (r'"([0-9]+)"\^\^<http://www.w3.org/2001/XMLSchema#integer>\n?', r'\1')
@@ -21,7 +23,7 @@ class ShExC:
         if isinstance(schema, ShExJ.Schema):
             self.schema = schema
         else:
-            self.schema = loads(schema, ShExJ)
+            self.schema = generate_shexj.parse(schema)
 
     def __str__(self) -> str:
         """ Return the stringified ShExC representation of the schema
@@ -32,10 +34,11 @@ class ShExC:
 
         rval = rline = ""
         for e in schema:
-            if len(rline + e) > 60:
-                rval += rline + '\n'
-                rline = ""
-            rline += " " + e
+            if e:
+                if len(rline + e) > 60:
+                    rval += rline + '\n'
+                    rline = ""
+                rline += " " + e
         rval += rline + '\n'
 
         rval = reduce(lambda r, p: re.sub(p[0], p[1], r), repl_list, rval)
@@ -73,11 +76,12 @@ class ShExC:
         if semActs is not None:
             for act in semActs:
                 rval.append(f"%{self.iriref(act.name)}")
-                rval.append(f"{{{act.code}%}}" if act.code is not None else '%')
+                act_code = self._escape_embedded_code(act.code).replace('%', '\\%') if act.code else None
+                rval.append(f"{{{act_code}%}}" if act_code is not None else '%')
         return rval
 
     def start(self, start: Optional[ShExJ.shapeExpr]) -> List[str]:
-        return ["START="] + self.shapeExpr(start) if start is not None else []
+        return (["START="] + self.shapeExpr(start)) if start is not None else []
 
     def shapes(self, shapes: Optional[List[ShExJ.shapeExpr]]) -> List[str]:
         rval = []
@@ -206,8 +210,8 @@ class ShExC:
         if tc.onShapeExpression:
             rval.append("ON SHAPE EXPRESSION")
             rval += self.shapeExpr(tc.onShapeExpression)
-        rval += self.semActs(tc.semActs)
         rval += self.annotations(tc.annotations)
+        rval += self.semActs(tc.semActs)
         return rval
 
     def annotations(self, annotations: Optional[List[ShExJ.Annotation]]) -> List[str]:
@@ -284,7 +288,12 @@ class ShExC:
             self.implementation_error(v)
 
     def objectLiteral(self, v: ShExJ.ObjectLiteral) -> str:
-        return f'"{v.value}"' + (f"@{v.language}" if v.language else f"^^{self.iriref(v.type)}" if v.type else "")
+        code_val = self._escape_embedded_code(v.value).\
+            replace("'", "\\'").\
+            replace('"', '\\"')
+
+        return f'"{code_val}"' +\
+               (f"@{v.language}" if v.language else f"^^{self.iriref(v.type)}" if v.type else "")
 
     def iriStem(self, v: ShExJ.IriStem) -> str:
         return self.iriref(v.stem) + '~'
@@ -343,3 +352,15 @@ class ShExC:
     @staticmethod
     def iriref(v: ShExJ.IRIREF) -> str:
         return f"<{v}>"
+
+    @staticmethod
+    def _escape_embedded_code(s: str) -> str:
+        rval = s.\
+            encode('unicode_escape').decode().\
+            replace('\\x08', '\\b')
+
+        def _sub(o) -> str:
+            c = o.group(0)
+            return chr(int('0x' + c[2:], 16))
+
+        return re.sub(r'\\x[0-9a-fA-F]+', _sub, rval, re.MULTILINE + re.DOTALL + re.UNICODE)

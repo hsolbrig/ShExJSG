@@ -23,6 +23,7 @@ shexTestRepository = os.path.abspath(os.path.expanduser("~/git/shexSpec/shexTest
 testShexFile: str = ""
 
 STOP_ON_ERROR = False       # True means go until you hit the first error
+VERBOSE = False
 
 
 NOT_SHEX_FILE = "Not a ShExJ file"
@@ -35,39 +36,7 @@ INSANE_BNODE = "Insane BNODE Identifiers"
 
 # Files to skip until we reintroduce a manifest reader
 skip = {'coverage.json': NOT_SHEX_FILE,
-        'manifest.json': NOT_SHEX_FILE,
-        # '1dotANDopen1dotAND1dotclose.json': NESTED_AND,
-        # 'open1dotAND1dotcloseAND1dot': NESTED_AND,
-        '1dotCodeWithEscapes1.json': SEMACT_CHARS,
-        # '1dotIMPORT1dot.json': USES_IMPORTS,
-        # "1literalPattern_with_all_meta.json": PATTERN_CHARS,
-        "1literalPattern_with_REGEXP_escapes.json": PATTERN_CHARS,
-        "1literalPattern_with_REGEXP_escapes_bare.json": PATTERN_CHARS,
-        "1refbnode_with_spanning_PN_CHARS1.json": INSANE_BNODE,
-        "1refbnode_with_spanning_PN_CHARS_BASE1.json": INSANE_BNODE,
-        "1val1STRING_LITERAL1_with_all_punctuation.json": LITERAL_CHARS,
-        "1val1STRING_LITERAL1_with_ECHAR_escapes": LITERAL_CHARS,
-        # "1val1STRING_LITERAL1_with_NO_ECHAR_escapes": LITERAL_CHARS,
-        # "1valExprRef-IV1": USES_IMPORTS,
-        # "1valExprRefbnode-IV1": USES_IMPORTS,
-        # "2EachInclude1-IS2": USES_IMPORTS,
-        # "2RefS1-Icirc": USES_IMPORTS,
-        # "2RefS1-IS2": USES_IMPORTS,
-        # "2RefS2-Icirc": USES_IMPORTS,
-        # "2RefS2-IS1": USES_IMPORTS,
-        # "3circRefS1-Icirc": USES_IMPORTS,
-        # "3circRefS1-IS2-IS3-IS3": USES_IMPORTS,
-        # "3circRefS1-IS2-IS3": USES_IMPORTS,
-        # "3circRefS1-IS23": USES_IMPORTS,
-        # "3circRefS123-Icirc": USES_IMPORTS,
-        # "3circRefS2-Icirc": USES_IMPORTS,
-        # "3circRefS2-IS3": USES_IMPORTS,
-        # "3circRefS3-IS12": USES_IMPORTS,
-        # "3circRefS3-Icirc": USES_IMPORTS,
-        "_all": "Just insane",
-        # "kitchenSink": "Just insane",
-        # "NOT1dotOR2dotX3": "Nesting issue",
-        # "NOT1dotOR2dotX3AND1": "Nesting issue"
+        'manifest.json': NOT_SHEX_FILE
 }
 
 
@@ -120,6 +89,7 @@ def validate_shexc_json(json_str: str, input_fname: str) -> bool:
     # Convert the ShExC back into ShExJ
     output_shex_obj = parse(shexc_str)
     if output_shex_obj is None:
+        print(f"{input_fname}")
         for number, line in enumerate(shexc_str.split('\n')):
             print(f"{number + 1}: {line}")
         return False
@@ -154,7 +124,8 @@ def validate_file(file: TestFile, stats: Stats) -> bool:
     """
     stats.total += 1
     if file.filename not in skip:
-        print(f"Testing {file.fullpath}")
+        if VERBOSE:
+            print(f"Testing {file.fullpath}")
         if ':' in file.fullpath:
             resp = requests.get(file.fullpath)
             if resp.ok:

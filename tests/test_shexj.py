@@ -27,9 +27,10 @@ shexTestJson: str = None
 
 
 STOP_ON_ERROR = False       # True means go until you hit one error
+VERBOSE = False
 
 # Files to skip until we reintroduce a manifest reader
-skip = ['coverage.json', 'manifest.json', '1dotCodeWithEscapes1.json']
+skip = ['coverage.json', 'manifest.json']
 
 
 class TestFile(NamedTuple):
@@ -78,7 +79,8 @@ def validate_file(file: TestFile) -> bool:
     :return:
     """
     if file.filename not in skip:
-        print(f"Testing {file.fullpath}")
+        if VERBOSE:
+            print(f"Testing {file.fullpath}")
         if ':' in file.fullpath:
             resp = requests.get(file.fullpath)
             if resp.ok:
@@ -87,8 +89,8 @@ def validate_file(file: TestFile) -> bool:
                 print("Error {}: {}".format(resp.status_code, resp.reason))
                 return False
         else:
-            with open(file.fullpath) as f:
-                file_text = f.read()
+            with open(file.fullpath, 'rb') as f:
+                file_text = f.read().decode()
         return validate_shexj_json(file_text, file.fullpath)
     else:
         print("Skipping {}".format(file.fullpath))
