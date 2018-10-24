@@ -1,5 +1,5 @@
-# Auto generated from ShExJ.jsg by PyJSG version 0.8b4
-# Generation date: 2018-10-04 01:40
+# Auto generated from ShExJ.jsg by PyJSG version 0.9.0
+# Generation date: 2018-10-24 13:27
 #
 import typing
 import pyjsg.jsglib as jsg
@@ -8,6 +8,7 @@ import pyjsg.jsglib as jsg
 _CONTEXT = jsg.JSGContext()
 _CONTEXT.TYPE = "type"
 _CONTEXT.TYPE_EXCEPTIONS.append("ObjectLiteral")
+_CONTEXT.TYPE_EXCEPTIONS.append("InnerContext")
 
 
 class _Anon1(jsg.JSGString):
@@ -15,6 +16,10 @@ class _Anon1(jsg.JSGString):
 
 
 class _Anon2(jsg.JSGString):
+    pattern = jsg.JSGPattern(r'http://www\.w3\.org/ns/shex\.jsonld')
+
+
+class _Anon3(jsg.JSGString):
     pattern = jsg.JSGPattern(r'(iri)|(bnode)|(nonliteral)|(literal)')
 
 
@@ -52,6 +57,17 @@ class BNODE(jsg.JSGString):
 
 class PN_PREFIX(jsg.JSGString):
     pattern = jsg.JSGPattern(r'({PN_CHARS_BASE})((({PN_CHARS})|\.)*({PN_CHARS}))?'.format(PN_CHARS=PN_CHARS.pattern, PN_CHARS_BASE=PN_CHARS_BASE.pattern))
+
+
+class InnerContext(jsg.JSGObject):
+    _reference_types = []
+    _members = {}
+    _strict = False
+
+    def __init__(self,
+                 **_kwargs: typing.Dict[str, object]):
+        super().__init__(_CONTEXT, **_kwargs)
+
 
 
 class stringFacet_1_(jsg.JSGObject):
@@ -430,7 +446,7 @@ class Annotation(jsg.JSGObject):
 class NodeConstraint(jsg.JSGObject):
     _reference_types = [xsFacet]
     _members = {'id': typing.Optional[shapeExprLabel],
-                'nodeKind': typing.Optional[_Anon2],
+                'nodeKind': typing.Optional[_Anon3],
                 'datatype': typing.Optional[IRIREF],
                 'length': typing.Optional[typing.Optional[jsg.Integer]],
                 'minlength': typing.Optional[typing.Optional[jsg.Integer]],
@@ -484,7 +500,7 @@ class NodeConstraint(jsg.JSGObject):
 
 class Schema(jsg.JSGObject):
     _reference_types = []
-    _members = {'@context': _Anon1,
+    _members = {'@context': typing.Union[_Anon2, jsg.ArrayFactory('@context', _CONTEXT, typing.Union[_Anon1, InnerContext], 0, None)],
                 'imports': typing.Optional[jsg.ArrayFactory('imports', _CONTEXT, IRIREF, 1, None)],
                 'startActs': typing.Optional[jsg.ArrayFactory('startActs', _CONTEXT, SemAct, 1, None)],
                 'start': typing.Optional["shapeExpr"],
