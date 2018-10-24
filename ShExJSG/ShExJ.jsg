@@ -8,13 +8,18 @@
 #   {TERMINAL->PROPTYPE} - a map from TERMINAL to PROPTYPE.
 #   (PROPTYPE1|PROPTYPE2...) - any of PROPTYPEn.
 
-.TYPE type - ObjectLiteral
+.TYPE type - ObjectLiteral InnerContext;
 
-; # All objects have a type property corresponding to the production name, e.g. "Schema"
+# All objects have a type property corresponding to the production name, e.g. "Schema"
 
 Schema           {
-  "@context":"http://www.w3.org/ns/shex.jsonld"
-imports:[IRIREF+]? startActs:[SemAct+]? start:shapeExpr? shapes:[shapeExpr+]? }
+  "@context":("http://www.w3.org/ns/shex.jsonld" | ["http://www.w3.org/ns/shex.jsonld"|InnerContext])
+   imports:[IRIREF+]? startActs:[SemAct+]? start:shapeExpr? shapes:[shapeExpr+]?
+}
+
+# Complex context
+InnerContext    {,}
+
 
 # Shape Expressions
 shapeExpr        = (ShapeDecl | ShapeOr | ShapeAnd | ShapeNot | NodeConstraint | Shape | shapeExprLabel | ShapeExternal) ;
