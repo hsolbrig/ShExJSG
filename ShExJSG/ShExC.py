@@ -12,6 +12,16 @@ repl_list: List[Tuple[str, str]] = [
 ]
 
 
+INDENT = 1
+BREAK = 2
+HARDBREAK = 3
+OUTDENT = -1
+
+# A string or an indent(1), break(0) or outdent(-1) token
+TOKEN = Union[str, int]
+
+WRAPCOL = 130
+
 class ShExC:
     """ Convert ShExJ into ShExC """
     def __init__(self, schema: Union[ShExJ.Schema, str], base: Optional[str]=None) -> None:
@@ -31,14 +41,31 @@ class ShExC:
         :return: A partially formatted representation
         """
         schema = self.tokenize()
-
+        indent = 0
+        broke = False
         rval = rline = ""
         for e in schema:
-            if e:
-                if len(rline + e) > 60:
+            if e == HARDBREAK:
+                broke = False
+                e = BREAK
+            if e == BREAK:
+                if not broke:
                     rval += rline + '\n'
-                    rline = ""
-                rline += " " + e
+                    rline = '    ' * indent
+                    broke = True
+            elif e == INDENT:
+                indent += 1
+            elif e == OUTDENT:
+                indent -= 1
+            elif e:
+                broke = False
+                if len(rline + e) > WRAPCOL:
+                    rval += rline + '\n'
+                    rline = '    ' * indent + e
+                elif len(rline):
+                    rline += (" " if len(rline.strip()) else "") + e
+                else:
+                    rline = e
         rval += rline + '\n'
 
         rval = reduce(lambda r, p: re.sub(p[0], p[1], r), repl_list, rval)
@@ -54,12 +81,12 @@ class ShExC:
         """
         return ' '.join(e for e in self.tokenize() if e)
 
-    def tokenize(self) -> List[str]:
+    def tokenize(self) -> List[TOKEN]:
         schema: List[str] = []
 
-        schema += self.imports(self.schema.imports)
-        schema += self.semActs(self.schema.startActs)
-        schema += self.start(self.schema.start)
+        schema += self.imports(self.schema.imports) + [BREAK]
+        schema += self.semActs(self.schema.startActs) + [BREAK]
+        schema += self.start(self.schema.start) + [BREAK]
         schema += self.shapes(self.schema.shapes)
         return schema
 
@@ -122,11 +149,11 @@ class ShExC:
         return rval
 
     def binop(self, op: Union[ShExJ.ShapeOr, ShExJ.ShapeAnd], txt: str) -> List[str]:
-        rval = [self.shapeExprLabel(op.id)] + [' ('] + self.shapeExpr(op.shapeExprs[0]) + [txt]
+        rval = [self.shapeExprLabel(op.id)] + [' (', INDENT] + self.shapeExpr(op.shapeExprs[0]) + [txt]
         for e in op.shapeExprs[1:-1]:
             rval += self.shapeExpr(e) + [txt]
         rval += self.shapeExpr(op.shapeExprs[-1])
-        rval += [')']
+        rval += [OUTDENT, ')']
         return rval
 
     def shapeOr(self, shapeOr: ShExJ.ShapeOr) -> List[str]:
@@ -150,7 +177,7 @@ class ShExC:
             for e in nc.values:
                 rval += self.valueSetValue(e)
             rval.append(']')
-        return rval
+        return self.tb(rval)
 
     def shape(self, shape: ShExJ.Shape) -> List[str]:
         rval = [self.shapeExprLabel(shape.id)]
@@ -161,7 +188,7 @@ class ShExC:
             rval += ['EXTRA'] + [self.iriref(e) for e in shape.extra]
         if shape.closed:
             rval += ['CLOSED']
-        rval += ['{'] + self.tripleExpr(shape.expression) + ['}']
+        rval += ['{', INDENT, BREAK] + self.tripleExpr(shape.expression) + [OUTDENT, BREAK, '}', HARDBREAK, HARDBREAK]
         if shape.annotations:
             rval += self.annotations(shape.annotations)
         if shape.semActs:
@@ -193,11 +220,11 @@ class ShExC:
 
     def _eachOneOf(self, eoo: Union[ShExJ.EachOf, ShExJ.OneOf], sep: str) -> List[str]:
         rval = ['$' + self.tripleExprLabel(eoo.id)] if eoo.id is not None else []
-        rval += ['(']
+        rval += ['(', INDENT]
         rval += self.tripleExpr(eoo.expressions[0])
         for expr in eoo.expressions[1:]:
             rval += [sep] + self.tripleExpr(expr)
-        rval += [')' + self.cardinality(eoo.min, eoo.max)]
+        rval += [OUTDENT, ')' + self.cardinality(eoo.min, eoo.max)]
         rval += self.annotations(eoo.annotations)
         rval += self.semActs(eoo.semActs)
         return rval
@@ -212,7 +239,7 @@ class ShExC:
             rval += self.shapeExpr(tc.onShapeExpression)
         rval += self.annotations(tc.annotations)
         rval += self.semActs(tc.semActs)
-        return rval
+        return self.tb(rval)
 
     def annotations(self, annotations: Optional[List[ShExJ.Annotation]]) -> List[str]:
         if annotations:
@@ -344,6 +371,11 @@ class ShExC:
             return self.bnode(label)
         else:
             self.implementation_error(label)
+
+    @staticmethod
+    def tb(l: List[str]) -> List[str]:
+        """ Remove blank entries """
+        return [e for e in l if e]
 
     @staticmethod
     def bnode(v: ShExJ.BNODE) -> str:

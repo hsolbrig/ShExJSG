@@ -8,6 +8,7 @@ Python representation of the ShEx AST(ish) specification.
 * 0.5.0 - first candidate for ShEx 2.1
 * 0.5.1 - beta ShEx 2.1
 * 0.5.2 - Fixes issue 6: Allow complex @context
+* 0.5.3 - Prettify ShExC emitter
 
 [![Pyversions](https://img.shields.io/pypi/pyversions/ShExJSG.svg)](https://pypi.python.org/pypi/ShExJSG)
 
