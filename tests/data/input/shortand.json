@@ -1,0 +1,21 @@
+{
+  "type": "Schema",
+  "@context": [
+    "http://www.w3.org/ns/shex.jsonld",
+    {
+      "@base": "http://bioentity.io/vocab/"
+    }
+  ],
+  "shapes": [
+    {
+      "type": "ShapeAnd",
+      "id": "http://bioentity.io/vocab/ActivityAndBehavior",
+      "shapeExprs": [
+        "http://bioentity.io/vocab/Occurrent",
+        {
+          "type": "Shape"
+        }
+      ]
+    }
+  ]
+}

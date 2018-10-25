@@ -10,7 +10,7 @@ if sys.version_info < (3, 6):
 
 setup(
     name='ShExJSG',
-    version='0.5.3',
+    version='0.5.4',
     packages=['ShExJSG'],
     url="http://github.com/hsolbrig/ShExJSG",
     license='Apache 2.0',

@@ -1,0 +1,5 @@
+
+<http://bioentity.io/vocab/ActivityAndBehavior>  (
+    @<http://bioentity.io/vocab/Occurrent> AND { }
+)
+

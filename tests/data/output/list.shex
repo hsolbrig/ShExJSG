@@ -1,0 +1,10 @@
+
+<http://bioentity.io/vocab/OntologyClass__List> CLOSED {
+    (  <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> @<http://bioentity.io/vocab/OntologyClass> ? ;
+       <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>  (
+          [ <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> ]
+          OR @<http://bioentity.io/vocab/OntologyClass__List>
+       )
+    )
+}
+
