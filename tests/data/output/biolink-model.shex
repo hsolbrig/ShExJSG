@@ -71,8 +71,8 @@
           <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <http://www.w3.org/2001/XMLSchema#string> ;
           <http://bioentity.io/vocab/qualifiers> @<http://bioentity.io/vocab/OntologyClass__List> ? ;
           <http://bioentity.io/vocab/publications> @<http://bioentity.io/vocab/Publication__List> ? ;
-          <http://purl.org/pav/providedBy> @<http://bioentity.io/vocab/Provider> ? ; <http://bioentity.io/vocab/association_slot>
-          <http://www.w3.org/2001/XMLSchema#string> ?
+          <http://purl.org/pav/providedBy> @<http://bioentity.io/vocab/Provider> ? ;
+          <http://bioentity.io/vocab/association_slot> <http://www.w3.org/2001/XMLSchema#string> ?
        )
     }
 )
@@ -350,8 +350,8 @@
 <http://bioentity.io/vocab/Gene>  (
     @<http://bioentity.io/vocab/MacromolecularMachine> AND {
        (  <http://purl.obolibrary.org/obo/RO_0002435> @<http://bioentity.io/vocab/Gene> ? ;
-          <http://purl.obolibrary.org/obo/RO_0002205> @<http://bioentity.io/vocab/GeneProduct> ? ; <WD:P2293>
-          @<http://bioentity.io/vocab/DiseaseOrPhenotypicFeature> ?
+          <http://purl.obolibrary.org/obo/RO_0002205> @<http://bioentity.io/vocab/GeneProduct> ? ;
+          <WD:P2293> @<http://bioentity.io/vocab/DiseaseOrPhenotypicFeature> ?
        )
     }
 )
@@ -383,10 +383,10 @@
 
 <http://bioentity.io/vocab/GeneOrGeneProduct>  (
     @<http://bioentity.io/vocab/MacromolecularMachine> AND {
-       (  <SEMMEDDB:COEXISTS_WITH> @<http://bioentity.io/vocab/GeneOrGeneProduct> ? ; <SEMMEDDB:COEXISTS_WITH>
-          @<http://bioentity.io/vocab/GeneOrGeneProduct> ? ; <SEMMEDDB:COEXISTS_WITH>
-          @<http://bioentity.io/vocab/GeneOrGeneProduct> ? ; <http://purl.obolibrary.org/obo/RO_0002206>
-          @<http://bioentity.io/vocab/AnatomicalEntity> ?
+       (  <SEMMEDDB:COEXISTS_WITH> @<http://bioentity.io/vocab/GeneOrGeneProduct> ? ;
+          <SEMMEDDB:COEXISTS_WITH> @<http://bioentity.io/vocab/GeneOrGeneProduct> ? ;
+          <SEMMEDDB:COEXISTS_WITH> @<http://bioentity.io/vocab/GeneOrGeneProduct> ? ;
+          <http://purl.obolibrary.org/obo/RO_0002206> @<http://bioentity.io/vocab/AnatomicalEntity> ?
        )
     }
 )
@@ -418,11 +418,12 @@
 <http://bioentity.io/vocab/GeneToExpressionSiteAssociation>  (
     @<http://bioentity.io/vocab/Association> AND {
        (  <http://bioentity.io/vocab/gene_to_expression_site_association_stage_qualifier> @<http://bioentity.io/vocab/LifeStage> ?
-          ; <http://bioentity.io/vocab/gene_to_expression_site_association_quantifier_qualifier>
-          @<http://bioentity.io/vocab/OntologyClass> ? ; <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject>
-          @<http://bioentity.io/vocab/GeneOrGeneProduct> ; <http://www.w3.org/1999/02/22-rdf-syntax-ns#object>
-          @<http://bioentity.io/vocab/AnatomicalEntity> ; <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate>
-          @<http://bioentity.io/vocab/RelationshipType>
+          ;
+          <http://bioentity.io/vocab/gene_to_expression_site_association_quantifier_qualifier>
+          @<http://bioentity.io/vocab/OntologyClass> ? ;
+          <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> @<http://bioentity.io/vocab/GeneOrGeneProduct> ;
+          <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> @<http://bioentity.io/vocab/AnatomicalEntity> ;
+          <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> @<http://bioentity.io/vocab/RelationshipType>
        )
     }
 )
@@ -547,7 +548,8 @@
 
 <http://bioentity.io/vocab/GeographicLocation>  (
     @<http://bioentity.io/vocab/PlanetaryEntity> AND {
-       (  <wgs:lat> <http://www.w3.org/2001/XMLSchema#float> ? ; <wgs:long> <http://www.w3.org/2001/XMLSchema#float> ?
+       (  <wgs:lat> <http://www.w3.org/2001/XMLSchema#float> ? ;
+          <wgs:long> <http://www.w3.org/2001/XMLSchema#float> ?
        )
     }
 )
@@ -626,41 +628,57 @@
 
 <http://bioentity.io/vocab/MolecularEntity>  (
     @<http://bioentity.io/vocab/BiologicalEntity> AND @<http://bioentity.io/vocab/ThingWithTaxon> AND {
-       (  <http://purl.obolibrary.org/obo/RO_0002436> @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS>
-          @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
-          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS>
-          @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
-          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS>
-          @<http://bioentity.io/vocab/GenomicEntity> ? ; <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/GenomicEntity> ? ;
-          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/GenomicEntity> ? ; <SEMMEDDB:AFFECTS>
-          @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
-          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS>
-          @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
-          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS>
-          @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
-          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS>
-          @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
-          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS>
-          @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
-          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS>
-          @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
-          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS>
-          @<http://bioentity.io/vocab/GenomicEntity> ? ; <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/GenomicEntity> ? ;
-          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/GenomicEntity> ? ; <SEMMEDDB:AFFECTS>
-          @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
-          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS>
-          @<http://bioentity.io/vocab/Transcript> ? ; <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/Transcript> ? ;
-          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/Transcript> ? ; <SEMMEDDB:AFFECTS>
-          @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
-          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS>
-          @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
-          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS>
-          @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
-          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS>
-          @<http://bioentity.io/vocab/MolecularEntity> ? ; <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
-          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ; <http://purl.obolibrary.org/obo/RO_0002448>
-          @<http://bioentity.io/vocab/MolecularEntity> ? ; <http://purl.obolibrary.org/obo/RO_0002607>
-          @<http://bioentity.io/vocab/DiseaseOrPhenotypicFeature> ?
+       (  <http://purl.obolibrary.org/obo/RO_0002436> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/GenomicEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/GenomicEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/GenomicEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/GenomicEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/GenomicEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/GenomicEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/Transcript> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/Transcript> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/Transcript> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <SEMMEDDB:AFFECTS> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <http://purl.obolibrary.org/obo/RO_0002448> @<http://bioentity.io/vocab/MolecularEntity> ? ;
+          <http://purl.obolibrary.org/obo/RO_0002607> @<http://bioentity.io/vocab/DiseaseOrPhenotypicFeature> ?
        )
     }
 )
@@ -677,13 +695,13 @@
 <http://bioentity.io/vocab/NamedThing> {
     (  <http://www.w3.org/2002/07/owl#topAnnotationProperty> <http://www.w3.org/2001/XMLSchema#string> ? ;
        <http://www.w3.org/2000/01/rdf-schema#label> <http://www.w3.org/2001/XMLSchema#string> ? ;
-       <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> @<XSD_string__List> ? ; <http://www.w3.org/2002/07/owl#topObjectProperty>
-       @<http://bioentity.io/vocab/NamedThing> ? ; <http://www.w3.org/2002/07/owl#topAnnotationProperty>
-       <http://www.w3.org/2001/XMLSchema#string> ? ; <http://www.w3.org/2002/07/owl#topAnnotationProperty>
-       <http://www.w3.org/2001/XMLSchema#string> ? ; <http://www.w3.org/2002/07/owl#topAnnotationProperty>
-       <http://www.w3.org/2001/XMLSchema#string> ? ; <http://purl.org/dc/terms/description>
-       <http://www.w3.org/2001/XMLSchema#string> ? ; <http://www.w3.org/2002/07/owl#topAnnotationProperty>
-       <http://www.w3.org/2001/XMLSchema#string> ?
+       <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> @<XSD_string__List> ? ;
+       <http://www.w3.org/2002/07/owl#topObjectProperty> @<http://bioentity.io/vocab/NamedThing> ? ;
+       <http://www.w3.org/2002/07/owl#topAnnotationProperty> <http://www.w3.org/2001/XMLSchema#string> ? ;
+       <http://www.w3.org/2002/07/owl#topAnnotationProperty> <http://www.w3.org/2001/XMLSchema#string> ? ;
+       <http://www.w3.org/2002/07/owl#topAnnotationProperty> <http://www.w3.org/2001/XMLSchema#string> ? ;
+       <http://purl.org/dc/terms/description> <http://www.w3.org/2001/XMLSchema#string> ? ;
+       <http://www.w3.org/2002/07/owl#topAnnotationProperty> <http://www.w3.org/2001/XMLSchema#string> ?
     )
 }
 

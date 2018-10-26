@@ -10,6 +10,7 @@ Python representation of the ShEx AST(ish) specification.
 * 0.5.2 - Fixes issue 6: Allow complex @context
 * 0.5.3 - Prettify ShExC emitter
 * 0.5.4 - Further emitter prettification
+* 0.5.5 - Yet more emitter prettification
 
 [![Pyversions](https://img.shields.io/pypi/pyversions/ShExJSG.svg)](https://pypi.python.org/pypi/ShExJSG)
 

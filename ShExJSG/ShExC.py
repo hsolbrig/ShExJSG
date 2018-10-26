@@ -216,17 +216,17 @@ class ShExC:
             self.implementation_error(te)
 
     def eachOf(self, eo: ShExJ.EachOf) -> List[TOKEN]:
-        return self._eachOneOf(eo, ';') + [BREAK]
+        return self._eachOneOf(eo, [';', BREAK])
 
     def oneOf(self, oo: ShExJ.OneOf) -> List[TOKEN]:
-        return self._eachOneOf(oo, '|')
+        return self._eachOneOf(oo, ['|', BREAK])
 
-    def _eachOneOf(self, eoo: Union[ShExJ.EachOf, ShExJ.OneOf], sep: str) -> List[TOKEN]:
+    def _eachOneOf(self, eoo: Union[ShExJ.EachOf, ShExJ.OneOf], sep: List[str]) -> List[TOKEN]:
         rval = ['$' + self.tripleExprLabel(eoo.id)] if eoo.id is not None else []
         rval += ['( ', INDENT]
         rval += self.tripleExpr(eoo.expressions[0])
         for expr in eoo.expressions[1:]:
-            rval += [sep] + self.tripleExpr(expr)
+            rval += sep + self.tripleExpr(expr)
         rval += [OUTDENT, BREAK, ')' + self.cardinality(eoo.min, eoo.max)]
         rval += self.annotations(eoo.annotations)
         rval += self.semActs(eoo.semActs)

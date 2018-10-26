@@ -87,7 +87,6 @@ def validate_shexc_json(json_str: str, input_fname: str) -> bool:
     shexc_str = str(ShExC(shex_json))
 
     # Convert the ShExC back into ShExJ
-    print(shexc_str)
     output_shex_obj = parse(shexc_str)
     if output_shex_obj is None:
         print(f"{input_fname}")

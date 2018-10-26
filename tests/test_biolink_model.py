@@ -25,6 +25,7 @@ class BioLinkShexCTestCase(unittest.TestCase):
 
     def test_conversion(self):
         """ Test the ShExC emitter using the biolink model """
+        self.maxDiff = None
         self.do_test('biolink-model.json')
 
     def test_shortand(self):
@@ -32,6 +33,9 @@ class BioLinkShexCTestCase(unittest.TestCase):
 
     def test_list(self):
         self.do_test('list.json')
+
+    def test_meta(self):
+        self.do_test('meta.json')
 
 
 if __name__ == '__main__':
