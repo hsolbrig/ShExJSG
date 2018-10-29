@@ -165,18 +165,21 @@ class ShExC:
         return [self.shapeExprLabel(shapeNot.id)] + ['NOT ('] + self.shapeExpr(shapeNot.shapeExpr) + [')']
 
     def nodeConstraint(self, nc: ShExJ.NodeConstraint) -> List[TOKEN]:
-        rval = [self.shapeExprLabel(nc.id)]
+        constraints = []
         if nc.nodeKind:
-            rval += [str(nc.nodeKind).upper()]
+            constraints += [str(nc.nodeKind).upper()]
         if nc.datatype:
-            rval += [self.iriref(nc.datatype)]
-        rval += self.xsFacet(nc)
+            constraints += [self.iriref(nc.datatype)]
+        constraints += self.xsFacet(nc)
         if nc.values is not None:
-            rval += ['[', INDENT]
+            constraints += ['[', INDENT]
             for e in nc.values:
-                rval += self.valueSetValue(e)
-            rval += [']', OUTDENT, BREAK]
-        return self.tb(rval)
+                constraints += self.valueSetValue(e)
+            constraints += [']', OUTDENT, BREAK]
+        constraints = self.tb(constraints)
+        if not constraints:
+            constraints = ['.']
+        return [self.shapeExprLabel(nc.id)] + constraints
 
     def shape(self, shape: ShExJ.Shape) -> List[TOKEN]:
         rval = [self.shapeExprLabel(shape.id)]

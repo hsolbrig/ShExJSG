@@ -11,6 +11,7 @@ Python representation of the ShEx AST(ish) specification.
 * 0.5.3 - Prettify ShExC emitter
 * 0.5.4 - Further emitter prettification
 * 0.5.5 - Yet more emitter prettification
+* 0.5.6 - Fixed empty nodeconstraint emitter (Issue #8)
 
 [![Pyversions](https://img.shields.io/pypi/pyversions/ShExJSG.svg)](https://pypi.python.org/pypi/ShExJSG)
 
