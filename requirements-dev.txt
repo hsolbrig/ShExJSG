@@ -1,0 +1,19 @@
+################################################################################
+# This requirements file has been automatically generated from `Pipfile` with
+# `pipenv-to-requirements`
+#
+#
+# This has been done to maintain backward compatibility with tools and services
+# that do not support `Pipfile` yet.
+#
+# Do NOT edit it directly, use `pipenv install [-d]` to modify `Pipfile` and
+# `Pipfile.lock` and then regenerate `requirements*.txt`.
+################################################################################
+
+certifi==2018.11.29
+chardet==3.0.4
+idna==2.8
+jsonasobj==1.2.1
+requests==2.21.0
+urllib3==1.24.1
+yadict-compare==1.2.0
