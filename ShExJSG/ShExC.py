@@ -42,6 +42,7 @@ class ShExC:
         else:
             self.schema = generate_shexj.parse(schema)
         self.namespaces = namespaces.namespace_manager if isinstance(namespaces, Graph) else namespaces
+        self.referenced_prefixes = set()
 
     def __str__(self) -> str:
         """ Return the stringified ShExC representation of the schema
@@ -87,12 +88,12 @@ class ShExC:
 
     def tokenize(self) -> List[TOKEN]:
         schema: List[TOKEN] = []
-        schema += self.prefixes() + [BREAK]
 
         schema += self.imports(self.schema.imports) + [BREAK]
         schema += self.semActs(self.schema.startActs) + [BREAK]
         schema += self.start(self.schema.start) + [BREAK]
         schema += self.shapes(self.schema.shapes)
+        schema = self.prefixes() + schema
         return schema
 
     def implementation_error(self, tkn: Any) -> None:
@@ -104,7 +105,8 @@ class ShExC:
             rval = [f'BASE <{self.base}>', HARDBREAK]
         if self.namespaces is not None:
             for prefix, namespace in self.namespaces.namespaces():
-                rval += [f'PREFIX {prefix}: <{namespace}>'] + [HARDBREAK]
+                if prefix in self.referenced_prefixes:
+                    rval += [f'PREFIX {prefix}: <{namespace}>'] + [HARDBREAK]
             rval.append('\n')
         return rval
 
@@ -411,7 +413,10 @@ class ShExC:
             if '/' not in vstr and '#' not in vstr:
                 return f"<{vstr}>"
         if self.namespaces is not None:
-            return str(URIRef(v).n3(self.namespaces))
+            curie = str(URIRef(v).n3(self.namespaces))
+            if ':' in curie and curie[1:-1] != v:
+                self.referenced_prefixes.add(curie.split(':')[0])
+            return curie
         else:
             return f"<{v}>"
 

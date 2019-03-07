@@ -13,6 +13,7 @@ Python representation of the ShEx AST(ish) specification.
 * 0.5.5 - Yet more emitter prettification
 * 0.5.6 - Fixed empty nodeconstraint emitter (Issue #8)
 * 0.6.0 - Add PREFIX output / switch to pipenv
+* 0.6.3 - Don't emit unused prefixes
 
 [![Pyversions](https://img.shields.io/pypi/pyversions/ShExJSG.svg)](https://pypi.python.org/pypi/ShExJSG)
 

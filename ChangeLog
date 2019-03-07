@@ -1,6 +1,14 @@
 CHANGES
 =======
 
+v0.6.4
+------
+
+* Wrestling with pbr
+
+v0.6.1
+------
+
 * Move to pipenv
 * Add PREFIX output and move to pipenv
 

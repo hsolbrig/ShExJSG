@@ -24,9 +24,7 @@ shex_c = """
 }
 """
 
-expected = """PREFIX xml: <http://www.w3.org/XML/1998/namespace>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+expected = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX ex: <http://example.org/sample/example1/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
@@ -50,11 +48,8 @@ ex:Person EXTRA rdf:type CLOSED {
 }"""
 
 expected_base = """BASE <http://example.org/sample/example1/>
-PREFIX xml: <http://www.w3.org/XML/1998/namespace>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX ex: <http://example.org/sample/example1/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 
 
