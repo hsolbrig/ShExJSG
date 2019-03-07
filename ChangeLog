@@ -1,6 +1,7 @@
 CHANGES
 =======
 
+* Move to pipenv
 * Add PREFIX output and move to pipenv
 
 v0.6.0
