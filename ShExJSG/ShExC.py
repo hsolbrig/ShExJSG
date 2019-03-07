@@ -2,6 +2,9 @@ import re
 from functools import reduce
 from typing import Optional, Tuple, List
 
+from rdflib.namespace import NamespaceManager
+from rdflib import Graph, URIRef
+
 from ShExJSG import ShExJ
 from pyjsg.jsglib import *
 
@@ -22,18 +25,23 @@ TOKEN = Union[str, int]
 
 WRAPCOL = 130
 
+
 class ShExC:
     """ Convert ShExJ into ShExC """
-    def __init__(self, schema: Union[ShExJ.Schema, str], base: Optional[str]=None) -> None:
+    def __init__(self, schema: Union[ShExJ.Schema, str], base: Optional[str] = None,
+                 namespaces: Optional[Union[NamespaceManager, Graph]] = None) -> None:
         """ Construct a converter
 
         :param schema: schema string or instance to parse
+        :param base: module base
+        :param namespaces: Used for namespace maps
         """
         self.base = base
         if isinstance(schema, ShExJ.Schema):
             self.schema = schema
         else:
             self.schema = generate_shexj.parse(schema)
+        self.namespaces = namespaces.namespace_manager if isinstance(namespaces, Graph) else namespaces
 
     def __str__(self) -> str:
         """ Return the stringified ShExC representation of the schema
@@ -68,9 +76,6 @@ class ShExC:
         rval += rline
 
         rval = reduce(lambda r, p: re.sub(p[0], p[1], r), repl_list, rval)
-        rval = rval.replace(self.base, '') if self.base is not None else rval
-        if self.base is not None:
-            rval = f'BASE <{self.base}>\n\n' + rval
         return rval
 
     def __repr__(self) -> str:
@@ -82,6 +87,7 @@ class ShExC:
 
     def tokenize(self) -> List[TOKEN]:
         schema: List[TOKEN] = []
+        schema += self.prefixes() + [BREAK]
 
         schema += self.imports(self.schema.imports) + [BREAK]
         schema += self.semActs(self.schema.startActs) + [BREAK]
@@ -91,6 +97,16 @@ class ShExC:
 
     def implementation_error(self, tkn: Any) -> None:
         raise NotImplementedError(f"Unknown token: {type(tkn)}")
+
+    def prefixes(self) -> List[str]:
+        rval = []
+        if self.base is not None:
+            rval = [f'BASE <{self.base}>', HARDBREAK]
+        if self.namespaces is not None:
+            for prefix, namespace in self.namespaces.namespaces():
+                rval += [f'PREFIX {prefix}: <{namespace}>'] + [HARDBREAK]
+            rval.append('\n')
+        return rval
 
     def imports(self, imports: Optional[List[ShExJ.IRIREF]]) -> List[str]:
         if imports is not None:
@@ -175,7 +191,7 @@ class ShExC:
             constraints += ['[', INDENT]
             for e in nc.values:
                 constraints += self.valueSetValue(e)
-            constraints += [']', OUTDENT, BREAK]
+            constraints += [']', OUTDENT]
         constraints = self.tb(constraints)
         if not constraints:
             constraints = ['.']
@@ -387,9 +403,17 @@ class ShExC:
     def bnode(v: ShExJ.BNODE) -> str:
         return str(v)
 
-    @staticmethod
-    def iriref(v: ShExJ.IRIREF) -> str:
-        return f"<{v}>"
+    def iriref(self, v: ShExJ.IRIREF) -> str:
+        if self.base is not None:
+            vstr = str(v)
+            if vstr.startswith(self.base):
+                vstr = vstr.replace(self.base, '')
+            if '/' not in vstr and '#' not in vstr:
+                return f"<{vstr}>"
+        if self.namespaces is not None:
+            return str(URIRef(v).n3(self.namespaces))
+        else:
+            return f"<{v}>"
 
     @staticmethod
     def _escape_embedded_code(s: str) -> str:

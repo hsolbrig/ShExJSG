@@ -1,7 +1,6 @@
 
 <http://bioentity.io/meta/Builtins> [ <http://www.w3.org/2001/XMLSchema#>~ ]
 
-
 <http://bioentity.io/meta/SlotRangeTypes>  (
     @<http://bioentity.io/vocab/TypeDefinition> OR @<http://bioentity.io/vocab/ClassDefinition> OR
     @<http://bioentity.io/meta/Builtins>
@@ -47,8 +46,7 @@
 <http://bioentity.io/vocab/OntologyClass__List> CLOSED {
     (  <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> @<http://bioentity.io/vocab/OntologyClass> ? ;
        <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>  (
-          [ <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> ]
-          OR @<http://bioentity.io/vocab/OntologyClass__List>
+          [ <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> ] OR @<http://bioentity.io/vocab/OntologyClass__List>
        )
     )
 }
@@ -56,8 +54,7 @@
 <http://bioentity.io/vocab/Publication__List> CLOSED {
     (  <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> @<http://bioentity.io/vocab/Publication> ? ;
        <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>  (
-          [ <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> ]
-          OR @<http://bioentity.io/vocab/Publication__List>
+          [ <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> ] OR @<http://bioentity.io/vocab/Publication__List>
        )
     )
 }
@@ -254,8 +251,7 @@
 <http://bioentity.io/vocab/ChemicalSubstance__List> CLOSED {
     (  <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> @<http://bioentity.io/vocab/ChemicalSubstance> ? ;
        <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>  (
-          [ <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> ]
-          OR @<http://bioentity.io/vocab/ChemicalSubstance__List>
+          [ <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> ] OR @<http://bioentity.io/vocab/ChemicalSubstance__List>
        )
     )
 }
@@ -686,8 +682,7 @@
 <XSD_string__List> CLOSED {
     (  <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.w3.org/2001/XMLSchema#string> ? ;
        <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>  (
-          [ <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> ]
-          OR @<XSD_string__List>
+          [ <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> ] OR @<XSD_string__List>
        )
     )
 }
@@ -842,8 +837,7 @@
 <http://bioentity.io/vocab/Gene__List> CLOSED {
     (  <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> @<http://bioentity.io/vocab/Gene> ? ;
        <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>  (
-          [ <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> ]
-          OR @<http://bioentity.io/vocab/Gene__List>
+          [ <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> ] OR @<http://bioentity.io/vocab/Gene__List>
        )
     )
 }
@@ -898,8 +892,7 @@
 <http://bioentity.io/vocab/DrugExposure__List> CLOSED {
     (  <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> @<http://bioentity.io/vocab/DrugExposure> ? ;
        <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>  (
-          [ <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> ]
-          OR @<http://bioentity.io/vocab/DrugExposure__List>
+          [ <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> ] OR @<http://bioentity.io/vocab/DrugExposure__List>
        )
     )
 }

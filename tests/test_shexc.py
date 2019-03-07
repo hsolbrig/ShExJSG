@@ -8,6 +8,7 @@ import requests
 from dict_compare import compare_dicts
 from jsonasobj import loads as jao_loads
 from pyjsg.jsglib import loads as jsg_loads
+from pyjsg.jsglib.loader import is_valid
 
 from ShExJSG import ShExJ, ShExC
 from pyshexc.parser_impl.generate_shexj import parse
@@ -36,7 +37,8 @@ INSANE_BNODE = "Insane BNODE Identifiers"
 
 # Files to skip until we reintroduce a manifest reader
 skip = {'coverage.json': NOT_SHEX_FILE,
-        'manifest.json': NOT_SHEX_FILE
+        'manifest.json': NOT_SHEX_FILE,
+        'representationTests.json': NOT_SHEX_FILE
 }
 
 
@@ -78,7 +80,7 @@ def validate_shexc_json(json_str: str, input_fname: str) -> bool:
 
     # Load the JSON image of the good object and make sure it is valud
     shex_json: ShExJ.Schema = jsg_loads(json_str, ShExJ)
-    if not shex_json._is_valid(logger):
+    if not is_valid(shex_json, logger):
         print("File: {} - ".format(input_fname))
         print(logger.getvalue())
         return False

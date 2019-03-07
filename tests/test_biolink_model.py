@@ -20,6 +20,7 @@ class BioLinkShexCTestCase(unittest.TestCase):
                 outf.write(shexc_text)
         with open(outfile) as outf:
             target_shexc = outf.read()
+        self.maxDiff = None
         self.assertEqual(target_shexc, shexc_text)
         self.assertFalse(update_output, "update_output is set to True")
 

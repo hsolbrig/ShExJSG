@@ -7,8 +7,7 @@ from typing import Optional, TextIO, List, NamedTuple
 import requests
 from dict_compare import compare_dicts
 from jsonasobj import loads as jao_loads
-from pyjsg.jsglib.loader import loads as jsg_loads
-
+from pyjsg.jsglib.loader import loads as jsg_loads, is_valid
 
 from ShExJSG import ShExJ
 
@@ -30,7 +29,7 @@ STOP_ON_ERROR = False       # True means go until you hit one error
 VERBOSE = False
 
 # Files to skip until we reintroduce a manifest reader
-skip = ['coverage.json', 'manifest.json']
+skip = ['coverage.json', 'manifest.json', 'representationTests.json']
 
 
 class TestFile(NamedTuple):
@@ -60,7 +59,7 @@ def validate_shexj_json(json_str: str, input_fname: str) -> bool:
     """
     logger = StringIO()
     shex_obj = jsg_loads(json_str, ShExJ)
-    if not shex_obj._is_valid(logger):
+    if not is_valid(shex_obj, logger):
         print("File: {} - ".format(input_fname))
         print(logger.getvalue())
         return False

@@ -12,6 +12,7 @@ Python representation of the ShEx AST(ish) specification.
 * 0.5.4 - Further emitter prettification
 * 0.5.5 - Yet more emitter prettification
 * 0.5.6 - Fixed empty nodeconstraint emitter (Issue #8)
+* 0.6.0 - Add PREFIX output / switch to pipenv
 
 [![Pyversions](https://img.shields.io/pypi/pyversions/ShExJSG.svg)](https://pypi.python.org/pypi/ShExJSG)
 
@@ -22,12 +23,13 @@ Python representation of the ShEx AST(ish) specification.
 ```python
 from ShExJSG import Schema, ShExJ
 from PyShExC import ShExC
+from pyjsg.jsglib.loader import is_valid
 
 schema = Schema()
 
 schema.start = ShExJ.Shape()
 
-print(schema._is_valid())
+print(is_valid(schema))
 print(schema._as_json_dumps())
 print(str(ShExC(schema)))
 ```
