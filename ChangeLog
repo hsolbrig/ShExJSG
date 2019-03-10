@@ -1,14 +1,8 @@
 CHANGES
 =======
 
-v0.6.7
-------
-
+* Pipfile and requirements update
 * Don't emit unreferenced prefixes
-
-v0.6.4
-------
-
 * Wrestling with pbr
 
 v0.6.1
