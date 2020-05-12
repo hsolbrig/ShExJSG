@@ -1,14 +1,12 @@
 import re
 from functools import reduce
-from typing import Optional, Tuple, List
+from typing import Optional, Tuple, List, Union, Any
 
-from rdflib.namespace import NamespaceManager
+from pyjsg.jsglib import isinstance_, Integer, JSGString, loads as jsg_loads
 from rdflib import Graph, URIRef
+from rdflib.namespace import NamespaceManager
 
 from ShExJSG import ShExJ
-from pyjsg.jsglib import *
-
-from pyshexc.parser_impl import generate_shexj
 
 repl_list: List[Tuple[str, str]] = [
     (r'"([0-9]+)"\^\^<http://www.w3.org/2001/XMLSchema#integer>\n?', r'\1')
@@ -40,7 +38,7 @@ class ShExC:
         if isinstance(schema, ShExJ.Schema):
             self.schema = schema
         else:
-            self.schema = generate_shexj.parse(schema)
+            self.schema = jsg_loads(schema, ShExJ)
         self.namespaces = namespaces.namespace_manager if isinstance(namespaces, Graph) else namespaces
         self.referenced_prefixes = set()
 
