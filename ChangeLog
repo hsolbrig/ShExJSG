@@ -1,6 +1,10 @@
 CHANGES
 =======
 
+v0.7.0
+------
+
+* Remove dependency on PyShExC
 * Changelog update
 
 v0.6.8
