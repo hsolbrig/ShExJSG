@@ -7,8 +7,7 @@ verify_ssl = true
 yadict_compare = "*"
 requests = "*"
 jsonasobj = ">=1.2.1"
-PyShExC = "~=0.8"
+rdflib = "~=5.0"
 
 [packages]
-PyJSG = "~=0.10"
-
+PyJSG = ">=0.11.1"

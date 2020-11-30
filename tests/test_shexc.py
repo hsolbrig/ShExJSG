@@ -11,14 +11,17 @@ from pyjsg.jsglib import loads as jsg_loads
 from pyjsg.jsglib.loader import is_valid
 
 from ShExJSG import ShExJ, ShExC
-from pyshexc.parser_impl.generate_shexj import parse
+from tests import SHEXC_INSTALLED
+if SHEXC_INSTALLED:
+    from PyShExC.parser_impl.generate_shexj import parse
 
 
 # Repository to validate against
-# shexTestRepository = "https://api.github.com/repos/shexSpec/shexTest/contents/schemas"
+shexTestRepository = "https://api.github.com/repos/shexSpec/shexTest/contents/schemas"
 
 # TODO: point this repository back togithub
-shexTestRepository = os.path.abspath(os.path.expanduser("~/git/shexSpec/shexTest/schemas/"))
+
+# shexTestRepository = os.path.abspath(os.path.expanduser("~/git/shexSpec/shexTest/schemas/"))
 
 # If not empty, validate this single file
 testShexFile: str = ""
@@ -192,6 +195,7 @@ def enumerate_directory(dir_) -> List[TestFile]:
             yield TestFile(fpath, fname)
 
 
+@unittest.skipIf(not SHEXC_INSTALLED, "ShExC must be installed to run this test")
 class ShExCValidationTestCase(unittest.TestCase):
     """ 1) Convert the contents of the shexTest/schema's directory into ShExJSG
         2) Convert the ShExJSG into ShExC

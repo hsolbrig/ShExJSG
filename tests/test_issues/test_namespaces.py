@@ -1,8 +1,12 @@
 import unittest
 
+
+from tests import SHEXC_INSTALLED
 from ShExJSG.ShExC import ShExC
-from pyshexc.parser_impl.generate_shexj import parse
+if SHEXC_INSTALLED:
+    from PyShExC.parser_impl.generate_shexj import parse
 from rdflib import Graph
+
 
 shex_c = """
 <http://example.org/sample/example1/String> <http://www.w3.org/2001/XMLSchema#string>
@@ -70,6 +74,7 @@ PREFIX foaf: <http://xmlns.com/foaf/0.1/>
     )
 }"""
 
+@unittest.skipIf(not SHEXC_INSTALLED, "Have to install ShExC to run these tests")
 class NamespaceTestCase(unittest.TestCase):
     def test_namespaces(self):
         """ Test a graph based namespace manager """
