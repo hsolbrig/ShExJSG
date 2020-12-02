@@ -13,11 +13,11 @@ from ShExJSG import ShExJ
 
 
 # Repository to validate against
-# shexTestRepository = "https://api.github.com/repos/shexSpec/shexTest/contents/schemas"
+shexTestRepository = "https://api.github.com/repos/shexSpec/shexTest/contents/schemas"
 
 
-# TODO: point this repository back togithub
-shexTestRepository = os.path.abspath(os.path.expanduser("~/git/shexSpec/shexTest/schemas/"))
+# TODO: consider a
+# shexTestRepository = os.path.abspath(os.path.expanduser("~/git/shexSpec/shexTest/schemas/"))
 
 # If not empty, validate this single file
 shexTestJson: str = None

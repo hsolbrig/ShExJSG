@@ -1,6 +1,3 @@
-# Auto generated from ShExJ.jsg by PyJSG version 0.9.0
-# Generation date: 2018-10-24 13:27
-#
 import typing
 import pyjsg.jsglib as jsg
 
