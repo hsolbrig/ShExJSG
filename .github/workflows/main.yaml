@@ -37,7 +37,8 @@ jobs:
       run: |
         pipenv install
         NEWF=$(mktemp).py
-        echo pipenv run generate_parser -nh -e -o $NEWF ShExJSG/ShExJ.jsg
+        pwd
+        ls -l ShExJSG/ShExJ.jsg
         pipenv run generate_parser -nh -e -o $NEWF ShExJSG/ShExJ.jsg
         echo DONE
         if [[ `tail -n +4 ShExJSG/ShExJ.py | diff -w -q $NEWF -` ]]
