@@ -10,4 +10,4 @@
 # `Pipfile.lock` and then regenerate `requirements*.txt`.
 ################################################################################
 
-pyjsg~=0.10
+pyjsg>=0.11.3
