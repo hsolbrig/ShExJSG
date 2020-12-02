@@ -35,6 +35,7 @@ jobs:
 
     - name: Update the ShExJ python module
       run: |
+        pip install -r requirements.txt
         NEWF=$(mktemp).py
         generate_parser -nh -e -o $NEWF ShExJSG/ShExJ.jsg
         if [[ `tail -n +4 ShExJSG/ShExJ.py | diff -w -q $NEWF -` ]]
