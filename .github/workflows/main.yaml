@@ -16,8 +16,9 @@ jobs:
       with:
         python-version: 3.8
 
+
+    - uses: dschep/install-pipenv-action@v1
     - name: Update requirements
-      uses: dschep/install-pipenv-action@v1
       run: |
         python -m pip install --upgrade pip
         pip install pipenv-to-requirements
