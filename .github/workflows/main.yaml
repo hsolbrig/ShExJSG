@@ -34,7 +34,10 @@ jobs:
       run: |
         pipenv install
         NEWF=$(mktemp).py
+        pwd
+        ls -l ShExJSG/ShExJ.jsg
         pipenv run generate_parser -nh -e -o $NEWF ShExJSG/ShExJ.jsg
+        echo DONE
         if [[ `tail -n +4 ShExJSG/ShExJ.py | diff -w -q $NEWF -` ]]
         then
           mv $NEWF ShExJSG/ShExJ.py
@@ -53,6 +56,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      
     - uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
