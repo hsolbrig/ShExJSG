@@ -10,12 +10,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v2
+    - uses: actions/setup-python@v2
       with:
-        python-version: 3.8
-
+        python-version: 3.7
 
     - uses: dschep/install-pipenv-action@v1
     - name: Update requirements
@@ -64,3 +61,26 @@ jobs:
       run: |
         pip install tox
         tox -e py
+
+  update-authors:
+      needs: test
+      name: Update Changelog and AUTHORS
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses: actions/checkout@v2
+        - uses: actions/setup-python@v2
+          with:
+            python-version: 3.8
+
+        - name: Refresh authors and changelog
+          run: |
+            python setup.py sdist
+            git add AUTHORS ChangeLog
+            if [[ -n $(git status -s AUTHORS ChangeLog) ]]
+            then
+              git config --local user.email "action@github.com"
+              git config --local user.name "GitHub Action"
+              git commit -m 'Update AUTHORS and ChangeLog' AUTHORS ChangeLog
+              git push
+            fi
