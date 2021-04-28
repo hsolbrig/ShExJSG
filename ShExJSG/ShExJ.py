@@ -1,3 +1,6 @@
+# Auto generated from ShExJ.jsg by PyJSG version 0.11.1
+# Generation date: 2021-04-28 11:14
+#
 import typing
 import pyjsg.jsglib as jsg
 
@@ -544,7 +547,7 @@ class ShapeDecl(jsg.JSGObject):
 class ShapeOr(jsg.JSGObject):
     _reference_types = []
     _members = {'id': typing.Optional[shapeExprLabel],
-                'shapeExprs': jsg.ArrayFactory('shapeExprs', _CONTEXT, typing.Union[ShapeDecl, "ShapeOr", "ShapeAnd", "ShapeNot", NodeConstraint, "Shape", typing.Union[IRIREF, BNODE], ShapeExternal], 2, None)}
+                'shapeExprs': jsg.ArrayFactory('shapeExprs', _CONTEXT, typing.Union[ShapeDecl, "ShapeOr", "ShapeAnd", "ShapeNot", NodeConstraint, "Shape", typing.Union[IRIREF, BNODE], ShapeExternal], 1, None)}
     _strict = True
 
     def __init__(self,
@@ -560,7 +563,7 @@ class ShapeOr(jsg.JSGObject):
 class ShapeAnd(jsg.JSGObject):
     _reference_types = []
     _members = {'id': typing.Optional[shapeExprLabel],
-                'shapeExprs': jsg.ArrayFactory('shapeExprs', _CONTEXT, typing.Union[ShapeDecl, ShapeOr, "ShapeAnd", "ShapeNot", NodeConstraint, "Shape", typing.Union[IRIREF, BNODE], ShapeExternal], 2, None)}
+                'shapeExprs': jsg.ArrayFactory('shapeExprs', _CONTEXT, typing.Union[ShapeDecl, ShapeOr, "ShapeAnd", "ShapeNot", NodeConstraint, "Shape", typing.Union[IRIREF, BNODE], ShapeExternal], 1, None)}
     _strict = True
 
     def __init__(self,
@@ -626,7 +629,7 @@ tripleExpr = typing.Union["EachOf", "OneOf", "TripleConstraint", typing.Union[IR
 class EachOf(jsg.JSGObject):
     _reference_types = []
     _members = {'id': typing.Optional[tripleExprLabel],
-                'expressions': jsg.ArrayFactory('expressions', _CONTEXT, typing.Union["EachOf", "OneOf", "TripleConstraint", typing.Union[IRIREF, BNODE]], 2, None),
+                'expressions': jsg.ArrayFactory('expressions', _CONTEXT, typing.Union["EachOf", "OneOf", "TripleConstraint", typing.Union[IRIREF, BNODE]], 1, None),
                 'min': typing.Optional[jsg.Integer],
                 'max': typing.Optional[jsg.Integer],
                 'semActs': typing.Optional[jsg.ArrayFactory('semActs', _CONTEXT, SemAct, 1, None)],
@@ -654,7 +657,7 @@ class EachOf(jsg.JSGObject):
 class OneOf(jsg.JSGObject):
     _reference_types = []
     _members = {'id': typing.Optional[tripleExprLabel],
-                'expressions': jsg.ArrayFactory('expressions', _CONTEXT, typing.Union[EachOf, "OneOf", "TripleConstraint", typing.Union[IRIREF, BNODE]], 2, None),
+                'expressions': jsg.ArrayFactory('expressions', _CONTEXT, typing.Union[EachOf, "OneOf", "TripleConstraint", typing.Union[IRIREF, BNODE]], 1, None),
                 'min': typing.Optional[jsg.Integer],
                 'max': typing.Optional[jsg.Integer],
                 'semActs': typing.Optional[jsg.ArrayFactory('semActs', _CONTEXT, SemAct, 1, None)],

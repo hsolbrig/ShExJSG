@@ -24,8 +24,8 @@ InnerContext    {,}
 # Shape Expressions
 shapeExpr        = (ShapeDecl | ShapeOr | ShapeAnd | ShapeNot | NodeConstraint | Shape | shapeExprLabel | ShapeExternal) ;
 ShapeDecl        {id:shapeExprLabel? abstract:@bool? restricts:[shapeExprLabel+]? shapeExpr:shapeExpr }
-ShapeOr          {id:shapeExprLabel? shapeExprs:[shapeExpr{2,}] }
-ShapeAnd         {id:shapeExprLabel? shapeExprs:[shapeExpr{2,}] }
+ShapeOr          {id:shapeExprLabel? shapeExprs:[shapeExpr+] }
+ShapeAnd         {id:shapeExprLabel? shapeExprs:[shapeExpr+] }
 ShapeNot         {id:shapeExprLabel? shapeExpr:shapeExpr }
 ShapeExternal    {id:shapeExprLabel?  }
 shapeExprLabel   = IRIREF|BNODE ;
@@ -56,8 +56,8 @@ Shape            {id:shapeExprLabel? extends:[shapeExprLabel+]? closed:@bool? ex
 
 # Triple Expressions
 tripleExpr       = (EachOf | OneOf | TripleConstraint | tripleExprLabel) ;
-EachOf           { id:tripleExprLabel? expressions:[tripleExpr{2,}] min:@int? max:@int? semActs:[SemAct+]? annotations:[Annotation+]? }
-OneOf            { id:tripleExprLabel? expressions:[tripleExpr{2,}] min:@int? max:@int? semActs:[SemAct+]? annotations:[Annotation+]? }
+EachOf           { id:tripleExprLabel? expressions:[tripleExpr+] min:@int? max:@int? semActs:[SemAct+]? annotations:[Annotation+]? }
+OneOf            { id:tripleExprLabel? expressions:[tripleExpr+] min:@int? max:@int? semActs:[SemAct+]? annotations:[Annotation+]? }
 TripleConstraint { id:tripleExprLabel? inverse:@bool? predicate:IRIREF valueExpr:shapeExpr? min:@int? max:@int? onShapeExpression:shapeExpr? semActs:[SemAct+]? annotations:[Annotation+]? }
 # TODO: Figure out why this indirection causes issues (reference is from tripleExpr)
 # tripleExprRef    = tripleExprLabel ;
