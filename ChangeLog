@@ -1,6 +1,8 @@
 CHANGES
 =======
 
+* Loosen minimum restrictions
+* Updated to test latest jsonasobj
 * Make publishing a bit more selective
 
 V0.7.1
