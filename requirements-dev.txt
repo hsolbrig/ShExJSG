@@ -10,7 +10,7 @@
 # `Pipfile.lock` and then regenerate `requirements*.txt`.
 ################################################################################
 
-jsonasobj>=1.2.1
+jsonasobj
 rdflib~=5.0
 requests
 yadict-compare

@@ -6,8 +6,11 @@ verify_ssl = true
 [dev-packages]
 yadict_compare = "*"
 requests = "*"
-jsonasobj = ">=1.2.1"
+jsonasobj = ">=2.0.2dev1"
 rdflib = "~=5.0"
 
 [packages]
 PyJSG = ">=0.11.5"
+
+[pipenv]
+allow_prereleases = true
