@@ -1,6 +1,26 @@
 CHANGES
 =======
 
+* Make publishing a bit more selective
+
+V0.7.1
+------
+
+* Remove Authors and changelog update
+* Automatically generated requirements
+* Further tweaks to build and publish process
+* Switch to correct version of generate\_parser
+* Update main.yaml
+* Update main.yaml
+* Update main.yaml
+* Switch to pipenv for install
+* Switch to pipenv for install
+* Install pyjsg before running update
+* Automatically generated requirements
+* Fix error in script
+* Remove Pipfile.lock from build as we don't use it in this package
+* Update scripts and add some automatic rebuild
+* Update for python 3.9
 * Add explicit license file
 * Update Changelog
 
