@@ -11,17 +11,9 @@ from pyjsg.jsglib import loads as jsg_loads
 from pyjsg.jsglib.loader import is_valid
 
 from ShExJSG import ShExJ, ShExC
-from tests import SHEXC_INSTALLED
+from tests import SHEXC_INSTALLED, shexTestRepository
 if SHEXC_INSTALLED:
-    from PyShExC.parser_impl.generate_shexj import parse
-
-
-# Repository to validate against
-shexTestRepository = "https://api.github.com/repos/shexSpec/shexTest/contents/schemas"
-
-# TODO: point this repository back togithub
-
-# shexTestRepository = os.path.abspath(os.path.expanduser("~/git/shexSpec/shexTest/schemas/"))
+    from pyshexc.parser_impl.generate_shexj import parse
 
 # If not empty, validate this single file
 testShexFile: str = ""

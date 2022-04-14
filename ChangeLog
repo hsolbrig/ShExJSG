@@ -1,6 +1,7 @@
 CHANGES
 =======
 
+* Update PyJSG requirements to new version
 * Add a name to the setup so that github dependency analysis will work
 * Update pypi-publish.yaml
 * Update pypi-publish.yaml

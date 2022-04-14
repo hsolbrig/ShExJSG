@@ -11,6 +11,7 @@
 ################################################################################
 
 jsonasobj>=1.2.1
+pyshexc
 rdflib-shim
 requests
 yadict-compare

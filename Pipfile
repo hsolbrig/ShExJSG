@@ -8,6 +8,7 @@ yadict_compare = "*"
 requests = "*"
 jsonasobj = ">=1.2.1"
 rdflib-shim = "*"
+pyshexc = "*"
 
 [packages]
 PyJSG = ">=0.11.10"
