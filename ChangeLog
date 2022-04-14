@@ -1,6 +1,12 @@
 CHANGES
 =======
 
+* Add a name to the setup so that github dependency analysis will work
+* Update pypi-publish.yaml
+* Update pypi-publish.yaml
+* Include pull request in build
+* Switch to main branch and point publisher at a version
+* Multiple updates to support rdflib 5/6
 * Make publishing a bit more selective
 
 V0.7.1
