@@ -10,14 +10,7 @@ from jsonasobj import loads as jao_loads
 from pyjsg.jsglib.loader import loads as jsg_loads, is_valid
 
 from ShExJSG import ShExJ
-
-
-# Repository to validate against
-shexTestRepository = "https://api.github.com/repos/shexSpec/shexTest/contents/schemas"
-
-
-# TODO: consider a
-# shexTestRepository = os.path.abspath(os.path.expanduser("~/git/shexSpec/shexTest/schemas/"))
+from tests import shexTestRepository
 
 # If not empty, validate this single file
 shexTestJson: str = None

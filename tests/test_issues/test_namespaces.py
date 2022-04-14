@@ -4,7 +4,7 @@ import unittest
 from tests import SHEXC_INSTALLED
 from ShExJSG.ShExC import ShExC
 if SHEXC_INSTALLED:
-    from PyShExC.parser_impl.generate_shexj import parse
+    from pyshexc.parser_impl.generate_shexj import parse
 from rdflib import Graph
 
 
@@ -28,10 +28,10 @@ shex_c = """
 }
 """
 
-expected = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+expected = """PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX ex: <http://example.org/sample/example1/>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 
 
 ex:String xsd:string
@@ -52,9 +52,9 @@ ex:Person EXTRA rdf:type CLOSED {
 }"""
 
 expected_base = """BASE <http://example.org/sample/example1/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 
 
 <String> xsd:string
@@ -90,6 +90,7 @@ class NamespaceTestCase(unittest.TestCase):
         g = Graph()
         g.bind('ex', 'http://example.org/sample/example1/')
         g.bind('foaf', 'http://xmlns.com/foaf/0.1/')
+        self.maxDiff = None
         self.assertEqual(expected, str(ShExC(shex, namespaces=g.namespace_manager)).strip())
 
     def test_with_base(self):
@@ -98,6 +99,7 @@ class NamespaceTestCase(unittest.TestCase):
         g = Graph()
         g.bind('ex', 'http://example.org/sample/example1/')
         g.bind('foaf', 'http://xmlns.com/foaf/0.1/')
+        self.maxDiff = None
         self.assertEqual(expected_base,
                          str(ShExC(shex, base='http://example.org/sample/example1/', namespaces=g)).strip())
 
