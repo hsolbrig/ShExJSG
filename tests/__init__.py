@@ -27,11 +27,10 @@ if SHEXC_INSTALLED:
 
 
 # Repository to validate against
-shexTestRepository_github = "https://api.github.com/repos/shexSpec/shexTest/contents/schemas"
-
-shexTestRepository = shexTestRepository_github
-# THIS only works on local tests.  Make sure it is removed before commit
-shexTestRepository = os.path.abspath(os.path.expanduser("~/git/shexSpec/shexTest/schemas/"))
-if shexTestRepository != shexTestRepository_github:
+shexTestRepository = "https://api.github.com/repos/shexSpec/shexTest/contents/schemas"
+shexTestRepository_local = os.path.abspath(os.path.expanduser("~/git/shexSpec/shexTest/schemas/"))
+if os.path.exists(shexTestRepository_local):
+    shexTestRepository = shexTestRepository_local
     from warnings import warn
     warn(f"Shex test repository is pointed at a local image: {shexTestRepository}")
+
